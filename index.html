@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pooja Gawande — React Developer</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy: #37517e;
+  --navy-dark: #2b3f6b;
+  --accent: #47b2e4;
+  --accent-dark: #2d9fcf;
+  --text: #444444;
+  --heading: #37517e;
+  --light-bg: #f3f5fa;
+  --white: #ffffff;
+  --muted: #000;
+  --border: #e0e0e0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  background: var(--white);
+}
+
+/* ── NAVBAR ── */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(40, 58, 90, 0.97);
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+}
+.brand {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.brand span { color: var(--accent); }
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+.nav-menu a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+}
+.nav-menu a:hover, .nav-menu a.active { color: #fff; }
+.nav-btn {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-radius: 25px !important;
+  padding: 0.45rem 1.4rem !important;
+  font-weight: 700 !important;
+  transition: background 0.2s !important;
+}
+.nav-btn:hover { background: var(--accent-dark) !important; }
+
+/* ── HERO ── */
+#hero {
+  background: linear-gradient(135deg, #1e3a5f 0%, #37517e 60%, #4a6891 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 70px;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(71,178,228,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(71,178,228,0.08) 0%, transparent 40%);
+}
+.hero-inner { position: relative; z-index: 1; }
+.hero-tag {
+  display: inline-block;
+  background: rgba(71,178,228,0.15);
+  border: 1px solid rgba(71,178,228,0.35);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 25px;
+  margin-bottom: 1.5rem;
+}
+h1.hero-title {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+h1.hero-title span { color: var(--accent); }
+.hero-sub {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.72);
+  max-width: 520px;
+  margin-bottom: 2.25rem;
+  font-weight: 400;
+}
+.hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 700; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+.btn-accent {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 18px rgba(71,178,228,0.35);
+}
+.btn-accent:hover { background: var(--accent-dark); color: #fff; transform: translateY(-1px); }
+.btn-white-out {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: transparent;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-white-out:hover { border-color: #fff; color: #fff; }
+
+/* hero stats */
+.hero-stats {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 2rem;
+}
+.hstat {
+  flex: 1;
+  padding-right: 2rem;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  margin-right: 2rem;
+}
+.hstat:last-child { border-right: none; margin-right: 0; }
+.hstat-n {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.hstat-n sup { font-size: 1rem; color: var(--accent); }
+.hstat-l {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.3rem;
+}
+
+/* ── SECTION SHARED ── */
+.sec-pad { padding: 80px 0; }
+.sec-light { background: var(--light-bg); }
+.sec-white { background: var(--white); }
+
+.sec-header { text-align: center; margin-bottom: 3rem; }
+.sec-badge {
+  display: inline-block;
+  background: #e7f5fc;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 25px;
+  margin-bottom: 0.75rem;
+}
+h2.sec-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+h4.sec-title {
+  font-size: 20px;
+    font-weight: 800;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+}
+.sec-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── ABOUT ── */
+#about { background: var(--white); }
+.about-left h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 1.25rem;
+}
+.about-left h2 em { font-style: italic; color: var(--accent); }
+.about-left p {
+  font-size: 0.93rem;
+  line-height: 1.85;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.about-list { list-style: none; margin-bottom: 1.5rem; }
+.about-list li {
+  font-size: 0.88rem;
+  color: var(--text);
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.about-list li::before {
+  content: '›';
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.about-list li span { font-weight: 700; color: var(--heading); }
+
+/* skills */
+.skill-block { margin-bottom: 1rem; }
+.skill-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+.skill-name { font-size: 0.82rem; font-weight: 700; color: var(--heading); }
+.skill-pct { font-size: 0.78rem; font-weight: 700; color: var(--accent); }
+.skill-track {
+  height: 6px;
+  background: #e0e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy), var(--accent));
+  border-radius: 6px;
+}
+
+/* ── PROJECTS ── */
+#projects { background: var(--light-bg); }
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+.proj-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s, transform 0.25s;
+  position: relative;
+}
+.proj-card:hover {
+  box-shadow: 0 10px 32px rgba(55,81,126,0.12);
+  transform: translateY(-4px);
+}
+.proj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--navy), var(--accent));
+  border-radius: 8px 8px 0 0;
+}
+.proj-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #e7f5fc;
+  color: var(--accent);
+  padding: 0.22rem 0.7rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.proj-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+.proj-desc {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+.proj-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
+}
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: gap 0.2s, color 0.2s;
+}
+.proj-link:hover {color: var(--navy); }
+.proj-link svg { width: 14px; height: 14px; }
+.proj-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.proj-tech span {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* ── CONTACT ── */
+#contact { background: var(--white); }
+.contact-info-col h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--heading);
+  margin-bottom: 0.75rem;
+}
+.contact-info-col p {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.ci-ico {
+  width: 44px; height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.ci-ico svg { width: 18px; height: 18px; stroke: var(--navy); }
+.ci-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; }
+.ci-val { font-size: 0.88rem; font-weight: 600; color: var(--heading); }
+
+.contact-form { background: var(--light-bg); border-radius: 8px; padding: 2rem; }
+.form-lbl { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--heading); margin-bottom: 0.45rem; }
+.form-ctrl {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text);
+  padding: 0.7rem 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-ctrl:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(71,178,228,0.12); }
+.form-ctrl::placeholder { color: #aaa; }
+textarea.form-ctrl { resize: none; height: 120px; }
+.form-group { margin-bottom: 1rem; }
+
+/* ── FOOTER ── */
+footer {
+  background: #283d52;
+  padding: 2rem 0;
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
+.footer-brand {
+  font-size: 1.1rem; font-weight: 800;
+  color: #fff; text-decoration: none;
+}
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-size: 0.78rem; font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+/* ── DIVIDER ACCENT ── */
+.sec-line {
+  width: 50px; height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin: 0.75rem auto 0;
+}
+.sec-line-left { margin: 0.75rem 0 0; }
+
+@media (max-width: 768px) {
+  #navbar { padding: 0 1.25rem; }
+  h1.hero-title { font-size: 2rem; }
+  .hero-stats { flex-direction: column; gap: 1rem; }
+  .hstat { border-right: none; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1rem; }
+  .hstat:last-child { border-bottom: none; padding-bottom: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="brand">MERN Stack Developer<span>.</span></a>
+  <ul class="nav-menu">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About Me</a></li>
+    <li><a href="#contact" class="nav-btn">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container hero-inner">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="hero-tag">OPEN TO NEW OPPORTUNITIES</div>
+        <h1 class="hero-title">
+          Turning Code into Beautiful
+          <span>Interfaces.</span>
+        </h1>
+        <p class="hero-sub">
+          I'm <strong>Pooja Gawande</strong> — Frontend & MERN Stack Developer with 1+ year of experience building responsive, high-performance web applications.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-accent">View Projects</a>
+          <a href="Pooja_Gawande_Resume.docx" class="btn-white-out">Download Resume</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat">
+            <div class="hstat-n">2<sup>+</sup></div>
+            <div class="hstat-l">Years Exp.</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-n">10<sup>+</sup></div>
+            <div class="hstat-l">Projects</div>
+          </div>
+           <div class="hstat">
+            <div class="hstat-n">12<sup>+</sup></div>
+            <div class="hstat-l">Happy Clients</div>
+          </div>
+          <!-- <div class="hstat">
+            <div class="hstat-n">98<sup>%</sup></div>
+            <div class="hstat-l">Satisfaction</div>
+          </div> --> 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec-pad sec-light">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-badge">Portfolio</div>
+      <h2 class="sec-title">My Projects</h2>
+      <div class="sec-line"></div>
+      <p class="sec-sub mt-3">A collection of projects I’ve designed and developed — from responsive web interfaces to full-stack MERN applications.</p>
+    </div>
+    <div class="proj-grid"> 
+
+      <div class="proj-card">
+        <span class="proj-tag">Healthcare Dashboard</span>
+        <div class="proj-name">Smart Healthcare Dashboard  </div>
+        <p class="proj-desc">
+          Built full-stack app with MongoDB, Express.js, React.js, and Node.js Implemented JWT authentication and role-based access control (Admin/Doctor/Patient)
+        </p>
+        <div class="proj-footer">
+          <a href="https://smart-healthcare-dashboard-beta.vercel.app/" class="proj-link" target="_blank">
+            View Project
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <div class="proj-tech"><span>React</span><span>MongoDB</span><span>Express.js</span></div>
+        </div>
+      </div>
+    
+  
+      <div class="proj-card">
+        <span class="proj-tag">Manufacturing</span>
+        <div class="proj-name">Anjalit Precision</div>
+        <p class="proj-desc">Industrial website highlighting services and products.</p>
+        <div class="proj-footer">
+          <a href="https://anjalitprecision.com" target="_blank" class="proj-link">Visit Site</a>
+          <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span><span>Js</span><span>Php</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <span class="proj-tag">Manufacturing circuits</span>
+        <div class="proj-name">Laminar Enterprise</div>
+        <p class="proj-desc">Provides high quality PCB Products.</p>
+        <div class="proj-footer">
+          <a href="https://laminarentp.in/#" target="_blank" class="proj-link">Visit Site</a>
+          <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span><span>Js</span><span>Php</span></div>
+        </div>
+      </div>
+
+      
+  
+      <div class="proj-card">
+        <span class="proj-tag">Software Company</span>
+        <div class="proj-name">Petrosoft India</div>
+        <p class="proj-desc">Software company website with services and solutions overview.</p>
+        <div class="proj-footer">
+          <a href="https://petrosoftindia.com" target="_blank" class="proj-link">Visit Site</a>
+     <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span><span>Js</span><span>Php</span></div>
+        </div>
+      </div>
+
+       <div class="proj-card">
+        <span class="proj-tag">Business Website</span>
+        <div class="proj-name">Silicon Mango</div>
+        <p class="proj-desc">Corporate website with modern UI and responsive design.</p>
+        <div class="proj-footer">
+          <a href="https://siliconmango.com" target="_blank" class="proj-link">Visit Site</a>
+          <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap</span></div>
+        </div>
+        
+      </div>
+  
+      <div class="proj-card">
+        <span class="proj-tag">NGO Website</span>
+        <div class="proj-name">Dhwani Foundation</div>
+        <p class="proj-desc">NGO platform showcasing initiatives and impact.</p>
+        <div class="proj-footer">
+          <a href="https://dhwani.org.in" target="_blank" class="proj-link">Visit Site</a>
+        <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap5</span></div>
+        </div>
+      </div>
+
+         <div class="proj-card">
+        <span class="proj-tag">Education</span>
+        <div class="proj-name">Nitiniketan School</div>
+        <p class="proj-desc">School website with structured content and accessibility.</p>
+        <div class="proj-footer">
+          <a href="https://nitiniketan.org" target="_blank" class="proj-link">Visit Site</a>
+          <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span></div>
+        </div>
+      </div>
+  
+      <div class="proj-card">
+        <span class="proj-tag">NGO</span>
+        <div class="proj-name">Karta Initiative</div>
+        <p class="proj-desc">International NGO website with clean UI and responsive layout.</p>
+        <div class="proj-footer">
+          <a href="https://karta-initiative.org.uk" target="_blank" class="proj-link">Visit Site</a>
+          <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap5-5</span></div>
+        </div>
+      </div>
+  
+      <div class="proj-card">
+        <span class="proj-tag">Travel</span>
+        <div class="proj-name">Sowparnika Tours & Travels</div>
+        <p class="proj-desc">Travel business landing page with service showcase and booking info.</p>
+        <div class="proj-footer">
+          <a href="https://sowparnikatoursandtravels.com" target="_blank" class="proj-link">Visit Site</a>
+         <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <span class="proj-tag">App</span>
+        <div class="proj-name">Weather App</div>
+        <p class="proj-desc">This weather app shows different city realted current weather data.</p>
+        <div class="proj-footer">
+          <a href="https://gawandepooja765.github.io/weather-app/index.html" target="_blank" class="proj-link">Visit Site</a>
+         <div class="proj-tech"><span>Html-5</span><span>Css-3</span><span>Bootstrap-5</span><span>JavaScript</span></div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="sec-pad sec-white">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-badge">Career</div>
+      <h2 class="sec-title">Experience</h2>
+      <div class="sec-line"></div>
+      <p class="sec-sub mt-3">My professional journey building real-world applications and working with clients.</p>
+    </div>
+
+    <div class="exp-timeline">
+
+      <!-- Freelance -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-head">
+            <h4 class="sec-title">Freelance Web Developer</h4>
+            <span>2 Year</span>
+          </div>
+          <ul>
+            <li>Designed and developed 7+ responsive client websites from scratch</li>
+            <li>Converted Figma/PSD designs into pixel-perfect, cross-browser compatible UI</li>
+            <li>Implemented mobile-first responsive design using HTML5, CSS3, and Bootstrap</li>
+            <li>Ensured performance, SEO-readiness, and clean maintainable code structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Internship -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-head">
+            <h4 class="sec-title">Web Developer Intern — Glassberry IT Solutions Pvt. Ltd.</h4>
+            <span>3 Months</span>
+          </div>
+          <ul>
+            <li>Built responsive web pages using HTML, CSS, and Bootstrap</li>
+            <li>Worked on real client projects and improved UI performance</li>
+            <li>Gained hands-on experience with professional development workflows</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec-pad sec-white">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-6 about-left">
+        <div class="sec-badge">About Me</div>
+        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--heading);letter-spacing:-0.02em;line-height:1.25;margin:0.75rem 0 1.25rem;">
+          React Developer &amp; <em style="font-style:italic;color:var(--accent)">Frontend Engineer</em>
+        </h2>
+        <div class="sec-line-left sec-line"></div>
+        <p style="margin-top:1.25rem;font-size:0.93rem;line-height:1.85;color:var(--text);">
+          I'm <strong>Pooja Gawande</strong> — a Frontend Developer with 1+ year of experience building responsive, high-performance web applications. Expanded into full-stack MERN development, delivering apps with JWT authentication, REST APIs, and cloud deployment. Proven track record with 7 live client websites; strong focus on UI quality, cross-browser compatibility, and clean scalable code.
+        </p>
+        <ul class="about-list">
+          <li><span>Location:</span> Pune, India · Available Inperson/Remote/Hybrid</li>
+          <li><span>Focus:</span>Frontend,Backend,Fullstack(Mern) </li>
+          <li><span>Email:</span> gawandepooja765@gmail.com</li>
+          <li><span>Portfolio Link:</span>google.com</li>
+
+        </ul>
+        <a href="#contact" class="btn-accent" style="margin-top:0.5rem">Get In Touch</a>
+      </div>
+
+      <div class="col-lg-6">
+        <h4 style="font-size:1rem;font-weight:800;color:var(--heading);margin-bottom:1.5rem;letter-spacing:0.01em;">Technical Skills</h4>
+        <div class="skill-block">
+          <div class="skill-header"><span class="skill-name">React.js, HTML5, CSS3, Bootstrap, JavaScript</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-block">
+          <div class="skill-header"><span class="skill-name">Node.js, Express.js</span><span class="skill-pct">70%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-block">
+          <div class="skill-header"><span class="skill-name">MongoDB (Atlas), SQL</span><span class="skill-pct">65%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-block">
+          <div class="skill-header"><span class="skill-name">Git, GitHub, Vercel, Render</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-block">
+          <div class="skill-header"><span class="skill-name">REST APIs, JWT Auth, CRUD</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--light-bg);border-radius:8px;border:1px solid var(--border);">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Also Proficient In</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Html5</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Css3</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">JavaScript/ES6</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">React</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Node</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Express Js</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">MongoDb</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Rest Api</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Sql</span>
+            <span style="font-size:0.78rem;font-weight:600;background:#fff;border:1px solid var(--border);border-radius:4px;padding:0.28rem 0.7rem;color:var(--heading);">Github</span>
+          </div>
+        </div>
+        <div>
+          <a href="Pooja_Gawande_Resume.docx" class="btn-accent" style="margin-top:0.5rem">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec-pad sec-light">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-badge">Contact</div>
+      <h2 class="sec-title">Get In Touch</h2>
+      <div class="sec-line"></div>
+      <p class="sec-sub mt-3">Have a project in mind or want to discuss an opportunity? I'd love to hear from you. I typically respond within 24 hours.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="contact-item">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Location</div>
+            <div class="ci-val">Pune, India · Open to Remote/Inperson/Hybrid</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Email</div>
+            <div class="ci-val">gawandepooja765@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Availability</div>
+            <div class="ci-val" style="color:#22c07a;font-weight:700;">● OPEN TO NEW OPPORTUNITIES</div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--white);border-radius:8px;border:1px solid var(--border);">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Find Me Online</div>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <a href="#" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.8rem;font-weight:700;color:var(--heading);text-decoration:none;background:var(--light-bg);border:1px solid var(--border);padding:0.4rem 0.85rem;border-radius:5px;transition:all 0.2s;">GitHub</a>
+            <a href="#" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.8rem;font-weight:700;color:var(--heading);text-decoration:none;background:var(--light-bg);border:1px solid var(--border);padding:0.4rem 0.85rem;border-radius:5px;transition:all 0.2s;">LinkedIn</a>
+             </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="contact-form">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-lbl">Your Name</label>
+                <input class="form-ctrl" type="text" placeholder="Enter Name"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-lbl">Email Address</label>
+                <input class="form-ctrl" type="email" placeholder="Enter Email Address"/>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-lbl">Subject</label>
+                <input class="form-ctrl" type="text" placeholder="Enter Subject"/>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-lbl">Message</label>
+                <textarea class="form-ctrl" placeholder="Message"></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn-accent" style="width:100%;justify-content:center;padding:0.85rem 2rem;border-radius:5px;font-size:0.9rem;cursor:pointer;">
+                Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#hero" class="footer-brand">MERN Stack Developer<span>.</span></a>
+      <div class="footer-links">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About Me</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-copy">© 2025· All Rights Reserved</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Active nav on scroll
+const sections = ['projects','about','contact'];
+const links = document.querySelectorAll('.nav-menu a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) cur = id;
+  });
+  links.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,0.25)' : 'none';
+});
+</script>
+</body>
+</html>
